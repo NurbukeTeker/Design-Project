@@ -76,6 +76,9 @@ But in the general evaluation, the parts in the flow were complied with and the 
 ### References
 
 http://www.osmanlica.com/
+
 http://dervaze.com/
+
 https://github.com/Tesseract-ocr/Tesseract
+
 https://Tesseract-ocr.github.io/tessdoc/
