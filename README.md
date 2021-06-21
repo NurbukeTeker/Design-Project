@@ -22,7 +22,7 @@ Platforms were prepared for both accurate data collection and users to receive t
 >In the first stage of the project, data labeled in Ottoman Turkish was tried to be collected. In addition, sample models were investigated. However, we wanted to create our own model when no ready-made model could be found. In this sense, we started to prepare desktop and web platforms to collect accurate and clean data. In this process, we made model improvements on the one hand and application development on the other. In the model improvement and fine-tuning part, the fact that the texts are pictorial because the texts are in Ottoman and the visual processing took us to different research branches. We tried to collect data suitable for model training from web and desktop applications. It has been ensured that these platforms can be used by everyone, send e-mails to the user, and send us the data by email. The user can view the Tesseract evaluations and relabel themselves. It was able to download this data to itself.After this stage, we used the ottoman tutorials to improve on the Tesseract.
 
 
-![Diagram1](tesseract-flask-image-labeling-master/SS/diagram1.png)
+![Diagram1](SS/diagram1.png)
 
 >The first of the design elements is the Tesseract model and its fine-tuning. In this sense, it was important to give Ottoman pictures to the mannequin with their tags in model education. It accepted .tif of images and .txt of tags as forms.
 
