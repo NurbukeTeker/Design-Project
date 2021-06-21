@@ -1,4 +1,4 @@
-# keras-flask-image-classifier
+# tesseract-flask-image-classifier
 A simple implementation for image classifier web application with Keras and Flask. The application allows to upload image file and determines what animal (<b>Cat</b> or <b>Dog</b>) is located on it with using convolutional neural network builded in Keras.
 
 
