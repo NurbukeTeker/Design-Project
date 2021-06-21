@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  flask-app:
+    build: .
+    image: ${tesseract-flask-image-labeling-master}
+    ports:
+      - 5000:80
+    restart: always
+  

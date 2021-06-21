@@ -1,0 +1,354 @@
+<!doctype html>
+<!-- Nurbüke Teker Hacettepe CS -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{url_for('static',filename='bootstrap.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="/static/main.css">
+  <title style="color:red" >Osmanlıca Resim Etiketleyici</title>
+  <style>
+    .bt, .bt:hover, .bt:visited {text-decoration:none; cursor:pointer; padding:0.1em 0.25em; min-width:1.4em; font-size:1.7em; color:#CC0033; font-family:Times New Roman; }
+    .btb, .btb:hover, .btb:visited {text-decoration:none; cursor:pointer; padding:0.1em 0em; min-width:1.2em; font-size:1.7em; color:#CC0033; font-family:Times New Roman; }
+    .cadr {width:80%; font-size:1.8em; color:#0000FF; font-family:Simplified Arabic, Times New Roman;  direction:rtl;  padding:0.3em;  }
+    </style>
+    <link href="/static/style.css" rel="stylesheet" type="text/css">
+    <link href="/static/contact.css" rel="stylesheet" type="text/css">
+    <script src="/static/base.js"></script>
+    <script src="/static/carot.js"></script> 
+    <script src="/static/clipboard.js"></script>
+    <script src="/static/savee.js"></script>
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+        ga('create', 'UA-122422-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+     
+  </head>
+  <body class style="margin:10px;padding:10px" onLoad="conversion.saisie.focus()">
+    <div class="page-header" id="banner">
+      <div class="row"  class="center">
+        <div class="col col3">
+        </div>
+        <div class="col col3">
+          <th > <img width="250" height="250"  src="static/osm_logo3.png" style="float:left"/> </th>
+        </div>
+        <div class="col col3">
+        </div>
+        <div class="col col3">
+          <h1>Osmanlıca Resim Etiketleme &nbsp;  وسمانليجا رسيم تيكتلم</h1>
+        </div>
+        <div class="col col3">
+        </div>
+        <div class="col col3">
+           <img width="250" height="250" id="img-right" src="static/osmgif.gif"  alt="OsmGif" style="float:right">
+        </div>
+        <div class="col col3">
+        </div>
+   
+      </div>
+      <br>
+     <div class="deprecatedexample" >
+      <p> Osmanlıca belgelerin resimlerini yükleyin, <br>
+        Tesseract OCR modeli size metindeki yazıları verecektir.<br>
+        Siz de osmanlıca kalvyeyi kullanarak;<br>
+        Tesseract tahminin sonucunun doğru veya yanlış olmasına göre modelin eğitimine katkıda bulunabilriisniz.<br>
+        Eğer sonucun doğru olduğunu düşünüyorsanız "Onayla" butonuna basabilirsiniz.<br>
+        Yanlış veya eksik tahminlemeler gördüğünüzde doğru cevabı sağ alttaki text alanına girebilir ve yeni etiketi oluşturabilrisiniz.<br>
+        Yazı alanında Osmanlıca klavye devreye girmektedir.<br>
+        Değişikliğiniz tamamlanınca "Yeni etiketi gönder" butonu ile işlemi tamamlayabilirsiniz.<br>
+        Yapılan değişiklikleri bize göndermek için "Mail At" butonuna basabilrisiniz.<br>
+     </p> 
+      
+      </div>
+
+      <p class="lead">Resim yükleyerek test edin </p>
+      <div class="row" > 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <form action="" method=post enctype=multipart/form-data>
+          <img width="75" height="75" src="static/upload_logo.png"   >
+  
+          <input type=file name=file>
+          <input type=submit value=Yükle>
+      </form>
+      <div class="vl"></div>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <form action="{{ url_for('mailme') }}" method="post">
+        <img width="75" height="75" src="static/mail_logo.png"   >
+        <input type=submit name="mailme" value="Mail At" style="background-color:rgb(241, 121, 8);">
+        <small>Mail atarak güncel resim ve sonuçları bize gönderebilirsiniz.</small>
+        </form>
+      </div>
+    
+     
+    </div>
+    <p style="margin-bottom:2cm;"></p>
+    <div class="row">
+        <div class="col-lg-4">
+          <div class="page-header">
+            <h3 id="tables">Sonuç</h3>
+          </div>
+          <div class="bs-component">
+            <table class="table table-hover" >
+                <tr class="table-active">
+                  <th scope="col">Resim</th>
+                  <th scope="col">Tesseract Tahmin Sonucu</th>
+                  <th scope="col">Onay</th>
+                  <th scope="col">Tahmin Düzenle</th>
+                </tr>
+                <tr class="border_bottom">
+                    <th scope="row"> <img width="500" height="600" src="{{imagesource}}" /> </th>
+                    <!-- <td style="width:400px" > <p> {{label}} </p>   </td> -->
+                      <td style="width:500px; font-size: 150%;"  >  <p> {% for trend in label %} <br /> {{ trend }} {% endfor %} </p>	 </td>
+                      <!-- <td style="width:400px" >  {% for trend in label %} <li> {{ trend }} {% endfor %}	 </td> -->
+
+                      <!-- contenteditable="true" -->
+                    <td> <form action="{{ url_for('approve') }}" method="post"> 
+                     <input type="submit" name="approve" value="Onay"  style="background-color:rgb(135, 243, 135);"></td>
+                     <input type="hidden" name="label" value= {{label}} />
+                     </form> </td>
+                     
+                    <td>
+                
+                        <form name="conversion" action="{{ url_for('handle_data') }}" method="post" >
+                        <br>
+                        <textarea name="saisie" id="bar" onKeyUp="transcrire()" rows=4 class="cadr"></textarea>
+                        <br>
+                        <br>
+                        
+                        <input type="button" class="bf" data-clipboard-action="copy" data-clipboard-target="#bar" value="Kopyala">
+
+                       <script>
+                        var clipboard = new Clipboard('.bf');
+                        clipboard.on('success', function(e) {
+                        console.log(e); 
+                        });
+                        clipboard.on('error', function(e) {
+                        console.log(e);
+                        });
+                        </script>
+                        <input type="button" class="bf" onClick="save()" value="Kaydet">
+                        <input type="button" class="bf" onClick="alpha(' ')" value="Boşluk"><input type="button" class="bf" onClick="conversion.saisie.rows=8;conversion.saisie.focus()" value="Küçük Çerçeve"><input type="button" class="bf" onClick="conversion.saisie.rows=40;conversion.saisie.focus()" value="Büyük Çerçeve">
+                        <br>
+                        <br>
+                        <br>
+                      
+
+                        <table class="tab-kb">
+                        <tr>
+                        <td>D</td>
+                        <td>S</td>
+                        <td>s'</td>
+                        <td>s</td>
+                        <td>j</td>
+                        <td>z</td>
+                        <td>r</td>
+                        <td>d'</td>
+                        <td>d</td>
+                        <td>H'</td>
+                        <td>H</td>
+                        <td>ç</td>
+                        <td>c</td>
+                        <td>t'</td>
+                        <td>t</td>
+                        <td>p</td>
+                        <td>b</td>
+                        <td>&#257;</td>
+                        <td>a</td>
+                        </tr>
+                        <tr>
+                        <td><input type="button" class="bt" onclick="alpha('ض')" value="ض" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ص')" value="ص" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ش')" value="ش" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('س')" value="س" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ژ')" value="ژ" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ز')" value="ز" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ر')" value="ر" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ذ')" value="ذ" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('د')" value="د" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('خ')" value="خ" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ح')" value="ح" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('چ')" value="چ" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ج')" value="ج" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ث')" value="ث" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ت')" value="ت" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('پ')" value="پ" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ب')" value="ب" ></td>
+                        <td><input type="button" class="btb" onclick="alpha('آ')" value="آ"></td>
+                        <td><input type="button" class="btb" onclick="alpha('ا')" value="ا"></td>
+                        </tr>
+                        </table>
+                        <br>
+                        <table class="tab-kb">
+                        <tr>
+                        <td>-</td>
+                        <td>y</td>
+                        <td>v</td>
+                        <td>h</td>
+                        <td>n</td>
+                        <td>m</td>
+                        <td>l</td>
+                        <td>ñ</td>
+                        <td>g</td>
+                        <td>k</td>
+                        <td>q</td>
+                        <td>f</td>
+                        <td>G'</td>
+                        <td>G</td>
+                        <td>Z</td>
+                        <td>T</td>
+                        </tr>
+                        <tr>
+                        <td><input type="button" class="bt" onclick="alpha('ء')" value="ء" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ي')" value="ي" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('و')" value="و" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ه')" value="ه" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ن')" value="ن" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('م')" value="م" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ل')" value="ل" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ڭ')" value="ڭ" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('گ')" value="گ" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ك')" value="ك" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ق')" value="ق" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ف')" value="ف" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('غ')" value="غ" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ع')" value="ع" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ظ')" value="ظ" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ط')" value="ط" ></td>
+                        </tr>
+                        </table>
+                        <br>
+                        <table class="tab-kb">
+                        <tr>
+                        <td><input type="button" class="bt" onclick="alpha('ى')" value="ى" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ئ')" value="ئ" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ؤ')" value="ؤ" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ة')" value="ة" ></td>
+                        <td><input type="button" class="btb" onclick="alpha('إ')" value="إ"></td>
+                        <td><input type="button" class="btb" onclick="alpha('أ')" value="أ"></td>
+                        <td><input type="button" class="btb" onclick="alpha('آ')" value="آ"></td>
+                        <td><input type="button" class="btb" onclick="alpha('َ')" value="َ&nbsp;"></td>
+                        <td><input type="button" class="btb" onclick="alpha('ً')" value="ً&nbsp;"></td>
+                        <td><input type="button" class="btb" onclick="alpha('ُ')" value="ُ&nbsp;"></td>
+                        <td><input type="button" class="btb" onclick="alpha('ٌ')" value="ٌ&nbsp;"></td>
+                        <td><input type="button" class="btb" onclick="alpha('ّ')" value="ّ&nbsp;"></td>
+                        <td><input type="button" class="btb" onclick="alpha('ْ')" value="ْ&nbsp;"></td>
+                        <td><input type="button" class="btb" onclick="alpha('ِ')" value="ِ&nbsp;"></td>
+                        <td><input type="button" class="btb" onclick="alpha('ٍ')" value="&#1613;&nbsp;"></td>
+                        </tr>
+                        </table>
+                        <br>
+                        <table class="tab-kb">
+                        <tr>
+                        <td><input type="button" class="bt" onclick="alpha('؟')" value="؟" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('؛')" value="؛" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('،')" value="،" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('ـ')" value="ـ" ></td>
+                        </tr>
+                        </table>
+                        <br>
+                        <table class="tab-kb">
+                        <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>6</td>
+                        <td>7</td>
+                        <td>8</td>
+                        <td>9</td>
+                        </tr>
+                        <tr>
+                        <td><input type="button" class="bt" onclick="alpha('٠')" value="٠" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('١')" value="١" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('٢')" value="٢" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('٣')" value="٣" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('٤')" value="٤" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('٥')" value="٥" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('٦')" value="٦" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('٧')" value="٧" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('٨')" value="٨" ></td>
+                        <td><input type="button" class="bt" onclick="alpha('٩')" value="٩" ></td>
+                        </tr>
+                        </table>
+                        <br>
+                        <!-- <form name="conversion" action="{{ url_for('handle_data') }}" method="post" > -->
+                        <input type="submit" name="inputText" value="Yeni Etiketi Gönder" style="background-color:rgb(83, 185, 216);"> </td>
+                      </form>
+                      </form> 
+                      </td>  
+                      <!-- ikinci row bitiş -->
+                  </tr>
+                  <!-- büyük table -->
+            </table> 
+        </div>
+      </div>
+
+
+</div>
+<footer>
+  <hr color="orange">
+  <br>
+  <div class="row"  class="center">
+     
+    <div class="col col5">
+      <p>
+      <strong>Resim kalitesi nasıl olmalı ? Resim uzantısı ne olmalı?</strong>
+    </p>
+    <p>Resim kalitesi iyi olduğu zaman OCR doğruluk oranı artmaktadır. Resim kalitesi düştükçe OCR doğruluk oranı düşmektedir. *JPG,*PNG dosya uzantılı resimler desteklenmektedir.</p>
+    </div>
+ 
+    <div class="col col5">
+      <p>
+      <strong>OKT (OCR) Nedir ?</strong>
+    </p>
+    <p>Optik Karakter Tanıma ya da kısaca OKT, bilgisayar ortamında bulunmayan yazılı dokümanların özel tarayıcılar veya normal olarak taranmış resimlerinin FineReader ve OmniPage gibi bazı özel programlar arayıcılığıyla bilgisayar ortamına düzenlenebilecek sayısal halde aktarılmasıdır..</p>
+  </div>
+  <div class="col col5">
+    <p>
+    <strong>Neden Osmanlıca OKT ve Resim Etiketleme?</strong>
+  </p>
+  <p>Bu çalışma Hacettepe BBM tarafından, osmanlıca metinlerin yazıya çevrilmesi ve Tesseract Yapay zeka modleinin geliştirilmesi için hazırlanmıştır.</p>
+  </div>
+
+</div>
+<br>
+  <hr color="orange">
+
+  <table class="eng">
+  <tbody>
+  <tr>
+    <br>
+    <br>
+   <h2>İki adımda Osmanlıca Belgelerin Metne Çevrimi</h2>
+   <h3><p>(i) Osmanlıca matbu dokümanları tarayın veya resmini çekin (ii) Osmanlica.com'a yükleyin ve saniyeler içinde eski alfabede metne çevirin.</p></h3>
+    <img width="1000" height="500"  src="static/demo.png" style="display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;"/> 
+  </tr>
+  
+  </tbody>
+  </table>
+  <hr color="orange">
+  <br>
+  <form class="formX">      
+    <input name="name" type="text" class="feedback-input" placeholder="İsim" />   
+    <input name="email" type="text" class="feedback-input" placeholder="Mail" />
+    &nbsp;&nbsp;<textarea class="textareaX" name="text" class="feedback-input" placeholder="Yorum"></textarea>
+    <input type="submitC" value="Gönder">
+  </form>
+  <p>Hacettepe BBM</p>
+
+  </footer>
+  </body>
+ 

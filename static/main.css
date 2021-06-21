@@ -1,0 +1,65 @@
+.center {
+  height: 100px;
+  left: 50%;
+  margin-top: -125px;
+  margin-left: -125px;
+  position: absolute;
+  top: 50%;
+  width: 120px;
+  }
+
+  table, td, th {
+    border: 1px solid black;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .deprecatedexample {
+    width: 100%;
+    color: black;
+    border: solid rgb(255,165,0); /* orange */
+    text-align:center}
+    
+    .vl {
+      border-left: 6px solid #fafd2f;
+      height: 100px;
+      left: 50%;
+      margin-left: 350px;
+      top: 0;
+    }
+  /* #header-content {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  } */
+
+  /* div.stil {
+    height: 200px;
+    width: 100%;
+    /* background-color: powderblue; 
+  } */
+  img.img-right{
+    float: right;
+  }
+  .row {
+    text-align: center;
+}
+.col {
+  display: inline-block;
+  margin-right: 4%;
+  float: left;
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+
+.col3 {
+  width: 21.98%;
+}
+.col5 {
+  width: 50%;
+}
+
