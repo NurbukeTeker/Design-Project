@@ -57,16 +57,16 @@ At this stage the Image loads, the image is predicted by the Tesseract. The esti
 >While making model improvements, we also started to prepare web and desktop applications. In this way, it would be a source where users could enter and personally convert pictures into text, tag them, and collect the right data for our model.
 In the Tesseract development part, we researched line and word segmentation processes in order to provide more accurate data and visuals. We've seen Tesseract provide some of these itself in the background. However, in addition to this, we worked on line-line and word-by-word separation of Ottoman texts. This allowed us to generate a more accurate entry for Tesseract. However, in the last term, we decided to give input images and tags in the form of paragraphs in order not to lose the semantic and fluid function in the Tesseract.
 
-![Demo2](SS/demo2.png)
+![Demo2](SS/demo3.png)
 > In this process, we worked on the Ottoman language documents of some authors such as "Hüseyin Rahmi Gürpınar", which we received from a linguist. And we made the evaluations on the documents. At this stage, my data was in Ottoman Printed format. This was aimed at having cleaner data and increasing the learnability of the model.
 We first fed images to the Tesseract and visually checked the results. And with the output we get from the Tesseract, the line, word, etc. on the picture. We were able to access a lot of information. However, the estimations could not be 100% successful since the Ottoman documents included both Persian and Arabic. This continued with developing platforms for labeling data.
  >Web application was prepared in Python language with Flask for good integration. Here, some endpoints and interfaces were integrated. HTML, CSS, JS are used in the interface. In this interface, the basic function is to upload the image by the user, send it to the Tesseract on the back, make a prediction by the Tesseract and produce an output, and present this output to the user. The user examines this output and either approves it or enters a new output himself.
 
-![Demo3](SS/demo3.png)
+![Demo3](SS/demo4.png)
 >In the text field where the new output will be entered, an Ottoman keyboard is used for the convenience of the user. This keyboard is also provided to be translated from some keys on the computer keyboard to Ottoman.
-![Demo4](SS/demo4.png)
+![Demo4](SS/demo5.png)
 > The tabular estimation of the base sheet is shown above. Here we have provided the following ottoman keyboard plugin. Also, when "A" is written on the keyboard, the Ottoman equivalent can be written on the screen. The user uploads the picture, sees the prediction result. Confirms the prediction that comes with Confirm. If the guess is not correct, it enters a new input and traverses it. Moves to the next picture.
-![Demo5](SS/demo5.png)
+![Demo5](SS/demo6.png)
 >The user also has the ability to download the new result he has written. As a result of the processes, the recorded data was sent to our team via email.
 
 ### Validation and Result
