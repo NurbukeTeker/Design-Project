@@ -28,9 +28,9 @@ email_config = {
     'server': getenv('MAIL_SMTP', 'smtp.gmail.com'),
     'port': int(getenv('MAIL_SMTP_PORT', 465)),
     'sender': getenv('MAIL_SENDER', 'ottoman.design.project2021@gmail.com'),
-    'recepients': json.loads(getenv('MAIL_RECEPIENTS', '["nurbuke.teker7@gmail.com"]')),
-    'username': getenv('MAIL_SMTP_USER', 'ottoman.design.project2021@gmail.com'),
-    'password': getenv('MAIL_SMTP_PASS', 'ottomanabn1721')
+    'recepients': json.loads(getenv('MAIL_RECEPIENTS', '["n******@gmail.com"]')),
+    'username': getenv('MAIL_SMTP_USER', 'o*********1@gmail.com'),
+    'password': getenv('MAIL_SMTP_PASS', 'o********1')
 }
 
 
